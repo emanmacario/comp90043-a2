@@ -135,27 +135,51 @@ the KDC is required to persistently store $N$ master keys, one for each user.
 In contrast, each user must only store their own master key. Session keys must also be kept for the
 duration of the session.
 
-\item This scheme does not ensure the authenticity of both A and B. The authenticity of B can
+\item This scheme does not ensure the authenticity of both A and B. The authenticity of B can be compromised if
+either B or an attacker C sends the KDC the message $ID_{c} \Vert E(K_{c}, N_{c})$ (or any message consisting of a
+matching identity and encrypted nonce pair). This means that when A receives a response, the identity of the 
+responder will not be who they believe to be.
 
-\item A replay attack can be detected in this scheme, and can be identified in steps (2), (3), or (4).
+\item A replay attack can be detected in this scheme, and can be identified in steps (2), (3), and (4). In step (2), if the KDC
+is sent a message $ID_{x} \Vert E(K_{y}, N_{y})$, where $x \neq y$, then the KDC may be suspicious of a replay
+attack, since they cannot decrypt the given encrypted nonce. In both steps (3) and (4), both B and A can detect a replay
+attack if the nonce that they receive is not equivalent to their original nonce.
 
 \end{enumerate}
 
 % Question 4
 \subsection*{Question 4}
 \begin{enumerate}
-\item Yes (look at STS wiki)
+\item Yes. Each user must have access to the other user's public key. The procedure can be summarised in the following three steps:
+\begin{center}
+(1) Alice $\rightarrow$ Bob: $g^{x}$
+
+(2) Alice $\leftarrow$ Bob: $g^{y}, E_{g^{xy}}(S_{B}(g^{y}, g^{x}))$
+
+(3) Alice $\rightarrow$ Bob: $E_{g^{xy}}(S_{A}(g^{x}, g^{y}))$
+\end{center}
 
 \item No. An attacker can simply change the data stream and recompute the hash value.
 
-\item Yes.
+\item Yes. The procedure can be summarised in the following four steps:
+\begin{center}
+(1) Alice $\rightarrow$ Bob: $g^{x}, C(K_{AB} \Vert g^{x})$
+
+(2) Alice $\leftarrow$ Bob: $g^{y}, C(K_{AB} \Vert g^{y})$
+
+(3) Alice: Test if received MAC matches calculated MAC
+
+(4) Bob: Test if received MAC matches calculated MAC
+\end{center}
 \end{enumerate}
 
 
 % Question 5
 \subsection*{Question 5}
 \begin{enumerate}
-\item Yes. If one block has length less than the fixed size, then 
+\item Yes. If the last block $M_{i}$ has length less than the fixed size, then it is possible to
+pad the MSBs of $M_{i}$ in such a way to retain the MSBs of the preceeding encrypted 
+and XORed blocks, $M_{1}$ to $M_{i-1}$.
 
 \item Yes, since the output is always mod $n$.
 
