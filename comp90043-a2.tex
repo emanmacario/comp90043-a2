@@ -1,0 +1,96 @@
+    
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage{color, colortbl}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{listings}
+\pagestyle{empty}
+\definecolor{Gray}{gray}{0.9}
+\textwidth      165mm
+\textheight     240mm
+\topmargin      -18mm
+\oddsidemargin  -2mm
+\evensidemargin 2mm
+\newcommand{\impl}{\mathbin{\Rightarrow}}
+\newcommand{\biim}{\mathbin{\Leftrightarrow}}
+\renewcommand{\theenumi}{\alph{enumi}}
+
+\author{Emmanuel Macario - 831659}
+\title{COMP90043 Cryptography \& Security Assignment 2}
+\date{Semster 2, 2019}
+
+\begin{document}
+\maketitle
+
+% Question 1
+\subsection*{Question 1}
+
+\begin{enumerate}
+\item Lianglu could recover the message without knowing Ge's or Jiajia's private key by the following:
+
+Since different $e$ are relatively prime, then $gcd(e_{G}, e_{J})=1$. Hence, $\exists x, y \in \mathbb{Z}$ such 
+that $xe_{G}+ye_{J}=1$. We can use XGCD to find $x, y$. Then, we have
+
+
+\begin{center}
+$C_{G}^{x} C_{J}^{y} = (M^{e_{G}})^{x} (M^{e_{J}})^{y}$
+$                                  =  M^{{x e_{G}}^+{y e_{J}}}$
+$                                  = M^{1}$
+$                                  = M (mod n)$
+
+\end{center}
+
+\item Lianglu can recover Zhuohan's private key using the following strategy.
+
+Given $d_{G}$, we can factor $n$ using the following method, then use XGCD to obtain $d_{Z}$.
+
+Firstly, we compute $k=d_{G}e - 1$. Since $ed$ mod $\phi (n) = 1$, then $k$ is a multiple of $\phi (n)$. 
+We also know that $k$ must be even. Hence, let $k=2^{t}r$ with $r$ odd and $t \geq 1$. Now, we pick a random
+generator $g$, where $1 < g < N$, and compute the sequence $g^{k/2}, g^{k/4}, \dots, g^{k/2^{t}}$. We determine
+the first sequence element $g^{x} \neq \pm 1$, where the previous element equals {1}.
+
+If no such element exists, then choose another $g$ and try again.
+
+Otherwise, let $p = gcd(g^{x}-1, n)$ and $q = n/p$.
+
+
+Now that we have $p, q$, we can compute $\phi (n) = (p-1)(q-1)$. Using XGCD, we can now find
+$d_{Z} = e_{Z}^{-1}$ mod $\phi (n)$.
+
+
+\end{enumerate}
+
+
+% Question 2
+\subsection*{Question 2}
+
+\begin{enumerate}
+
+\item A
+\item B
+\end{enumerate}
+
+% Question 3
+\subsection*{Question 3}
+
+\begin{enumerate}
+\item A
+
+\item B
+
+\item C
+
+\item D
+\end{enumerate}
+
+% Question 4
+\subsection*{Question 4}
+\begin{enumerate}
+\item A
+
+\item B
+\end{enumerate}
+
+\end{document}
