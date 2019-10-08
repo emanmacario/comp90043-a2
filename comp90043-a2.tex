@@ -110,21 +110,64 @@ $D_{Z}(C) = C^{k_{1} k_{3}}$ mod $n$
 \subsection*{Question 3}
 
 \begin{enumerate}
-\item A
+\item (1) A sends a request message to B, which includes the identity of A, and a unique nonce $N_{a}$
+encrypted with their secret key $K_{a}$
 
-\item B
+(2) B sends A's original message, plus their own message mirroring A's, which includes the identity of B,
+and a unique nonce $N_{b}$ encrypted with their secret key $K_{b}$, to the KDC
 
-\item C
+(3) The KDC sends B a response message. The message includes two components, one meant for A, and the other meant for B.
+Each component is encrypted with the intended recipient's secret key, and includes:
+\begin{itemize}
+	\item The one time session key, $K_{s}$, to be used for the session
+	\item The identity of the opposite communicating user (e.g. $ID_{a}$ for B)
+	\item The original nonce, to enable the users to match the response with the corresponding request
+\end{itemize}
 
-\item D
+(4) B forwards A's component, which they received from the KDC, to A 
+
+
+\item To estimate the storage requirements of both the KDC and users, some assumptions must be made.
+We assume that a session key is discarded after use, and that the KDC does not store session keys. For each
+user, there is a master key that they share with the KDC. Hence, if there are a total of $N$ unique users, then
+the KDC is required to persistently store $N$ master keys, one for each user.
+
+In contrast, each user must only store their own master key. Session keys must also be kept for the
+duration of the session.
+
+\item This scheme does not ensure the authenticity of both A and B. The authenticity of B can
+
+\item A replay attack can be detected in this scheme, and can be identified in steps (2), (3), or (4).
+
 \end{enumerate}
 
 % Question 4
 \subsection*{Question 4}
 \begin{enumerate}
-\item A
+\item Yes (look at STS wiki)
 
-\item B
+\item No. An attacker can simply change the data stream and recompute the hash value.
+
+\item Yes.
 \end{enumerate}
+
+
+% Question 5
+\subsection*{Question 5}
+\begin{enumerate}
+\item Yes. If one block has length less than the fixed size, then 
+
+\item Yes, since the output is always mod $n$.
+
+\item No, since a message containing many blocks may require numerous expensive exponentiation computations.
+
+\item Yes, by the RSA problem.
+
+\item No.
+
+\item No.
+\end{enumerate}
+
+
 
 \end{document}
