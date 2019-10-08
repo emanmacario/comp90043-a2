@@ -5,6 +5,7 @@
 \usepackage{color, colortbl}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{mathtools}
 \usepackage{listings}
 \pagestyle{empty}
 \definecolor{Gray}{gray}{0.9}
@@ -16,6 +17,10 @@
 \newcommand{\impl}{\mathbin{\Rightarrow}}
 \newcommand{\biim}{\mathbin{\Leftrightarrow}}
 \renewcommand{\theenumi}{\alph{enumi}}
+
+
+\DeclarePairedDelimiter\Floor\lfloor\rfloor
+\DeclarePairedDelimiter\Ceil\lceil\rceil
 
 \author{Emmanuel Macario - 831659}
 \title{COMP90043 Cryptography \& Security Assignment 2}
@@ -65,11 +70,40 @@ $d_{Z} = e_{Z}^{-1}$ mod $\phi (n)$.
 
 % Question 2
 \subsection*{Question 2}
-
 \begin{enumerate}
 
-\item A
-\item B
+\item Encryption function for Ge:
+\begin{center}
+$E_{G}(M) = M^{k_{1}}$ mod $n$
+\end{center}
+
+Decryption function for Jiajia:
+\begin{center}
+$D_{J}(C) = C^{k_{2} k_{3}}$ mod $n$
+\end{center}
+
+\item Encryption function for Jiajia: 
+\begin{center}
+\[
+  E_{J \rightarrow X}(M)=
+  \begin{cases}
+  	M^{k_{3}} \text{ mod } n & \text{if $X=$ Ge} \\
+  	M^{k_{2}} \text{ mod } n & \text{if $X=$ Zhuohan}
+  \end{cases}
+\]
+\end{center}
+
+Decryption function for Ge:
+\begin{center}
+$D_{G}(C) = C^{k_{1} k_{2}}$ mod $n$
+\end{center}
+
+Decryption function for Zhuohan:
+\begin{center}
+$D_{Z}(C) = C^{k_{1} k_{3}}$ mod $n$
+\end{center}
+
+
 \end{enumerate}
 
 % Question 3
